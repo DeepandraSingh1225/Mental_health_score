@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wyrm | Mental Well-Being Assessment</title>
+<meta name="description" content="An AI-powered assessment that analyzes lifestyle and social media patterns to estimate a mental well-being score.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Ambient background layer: shared by the whole page -->
+<div class="ambient" aria-hidden="true">
+  <div class="ambient__glow ambient__glow--one"></div>
+  <div class="ambient__glow ambient__glow--two"></div>
+  <div class="ambient__embers" id="ambientEmbers"></div>
+</div>
+
+<!-- ============================================================ -->
+<!-- HERO SECTION -->
+<!-- ============================================================ -->
+<header class="hero" id="top">
+  <nav class="hero__nav">
+    <span class="wordmark">MindMetric<span class="wordmark__dot">.</span></span>
+    <button id="themeToggle" class="theme-toggle" type="button">
+      ☀️
+    </button>
+  </nav>
+
+  <div class="hero__content">
+    <p class="hero__badge">AI powered — mental health analysis</p>
+
+    <h1 class="hero__title">
+      Understand your<br>
+      mental well&#8209;being
+    </h1>
+
+    <p class="hero__subtitle">
+      An AI-powered assessment that analyzes lifestyle and social media
+      patterns to estimate your mental health score.
+    </p>
+
+    <button class="btn btn--primary hero__cta" id="startAssessmentBtn" type="button">
+      Start assessment
+    </button>
+  </div>
+
+  <!-- Abstract dragon silhouette, purely decorative -->
+  <svg class="dragon dragon--hero" id="hero-dragon" viewBox="0 0 900 700" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="dragonBody" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#1a0d0d"/>
+        <stop offset="100%" stop-color="#050303"/>
+      </linearGradient>
+      <radialGradient id="eyeGlow" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#ff5464" stop-opacity="1"/>
+        <stop offset="100%" stop-color="#ff5464" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <path class="dragon__body" fill="url(#dragonBody)" d="M40,620 C160,520 210,380 300,330 C360,296 380,240 430,210 C480,180 560,175 610,120 C650,78 700,60 760,66 C720,90 700,120 705,150 C740,140 780,150 810,180 C775,182 748,198 735,224 C770,232 796,258 806,292 C772,282 742,290 722,312 C700,296 672,292 648,300 C606,314 566,344 544,388 C610,378 664,400 700,444 C660,438 616,448 584,474 C548,502 498,514 452,504 C486,532 500,570 494,608 C462,584 426,572 388,574 C398,606 392,640 372,666 C352,636 322,618 288,614 C286,646 268,674 240,690 C232,656 212,630 182,616 C162,650 130,672 92,676 C104,644 100,610 82,584 C66,600 46,610 24,614 C40,616 44,618 40,620 Z"/>
+    <circle class="dragon__eye" cx="676" cy="108" r="6" fill="url(#eyeGlow)"/>
+    <circle class="dragon__eye-core" cx="676" cy="108" r="2.2" fill="#ffdede"/>
+  </svg>
+</header>
+
+<main>
+
+  <!-- ============================================================ -->
+  <!-- ASSESSMENT FORM SECTION -->
+  <!-- ============================================================ -->
+  <section class="section" id="assessment" aria-labelledby="assessment-title">
+    <div class="section__inner">
+
+      <form class="card card--form" id="assessmentForm" novalidate>
+        <div class="card__header">
+          <h2 class="card__title" id="assessment-title">Your mental health assessment</h2>
+          <p class="card__subtitle">Answer honestly for a more meaningful prediction.</p>
+        </div>
+
+        <p class="form-note">
+          Example values are pre-filled for demonstration. You can change them before calculating.
+        </p>
+
+        <div class="form-grid">
+
+          <!-- Age -->
+          <div class="field">
+            <label for="age">Age</label>
+            <input type="number" id="age" name="age" min="0" max="100" step="1" value="21" required
+                   aria-describedby="age-hint">
+            <p class="field__hint" id="age-hint">Between 0 and 100 years.</p>
+          </div>
+
+          <!-- Gender -->
+          <div class="field">
+            <label for="gender">Gender</label>
+            <select id="gender" name="gender" required>
+              <option value="Female">Female</option>
+              <option value="Male">Male</option>
+            </select>
+          </div>
+
+          <!-- Country -->
+          <div class="field">
+            <label for="country">Country</label>
+            <select id="country" name="country" required>
+              <option value="India">India</option>
+              <option value="USA">USA</option>
+              <option value="Canada">Canada</option>
+              <option value="Australia">Australia</option>
+              <option value="UK">UK</option>
+              <option value="Germany">Germany</option>
+              <option value="Mexico">Mexico</option>
+              <option value="Turkey">Turkey</option>
+              <option value="France">France</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <!-- Academic Level -->
+          <div class="field">
+            <label for="academicLevel">Academic level</label>
+            <select id="academicLevel" name="academic_level" required>
+              <option value="Undergraduate">Undergraduate</option>
+              <option value="Graduate">Graduate</option>
+              <option value="High School">High School</option>
+            </select>
+          </div>
+
+          <!-- Most Used Platform -->
+          <div class="field">
+            <label for="platform">Most used social platform</label>
+            <select id="platform" name="most_used_platform" required>
+              <option value="Instagram">Instagram</option>
+              <option value="Facebook">Facebook</option>
+              <option value="LinkedIn">LinkedIn</option>
+              <option value="Snapchat">Snapchat</option>
+              <option value="Twitter">Twitter</option>
+              <option value="YouTube">YouTube</option>
+              <option value="TikTok">TikTok</option>
+              <option value="LINE">LINE</option>
+              <option value="KakaoTalk">KakaoTalk</option>
+              <option value="VKontakte">VKontakte</option>
+              <option value="WhatsApp">WhatsApp</option>
+              <option value="WeChat">WeChat</option>
+            </select>
+          </div>
+
+          <!-- Purpose of Use -->
+          <div class="field">
+            <label for="purpose">Purpose of use</label>
+            <select id="purpose" name="purpose_of_use" required>
+              <option value="Entertainment">Entertainment</option>
+              <option value="Networking">Networking</option>
+              <option value="Education">Education</option>
+              <option value="News">News</option>
+            </select>
+          </div>
+
+          <!-- Stress Level -->
+          <div class="field">
+            <label for="stressLevel">Stress level</label>
+            <select id="stressLevel" name="stress_level" required>
+              <option value="Low">Low</option>
+              <option value="Medium" selected>Medium</option>
+              <option value="High">High</option>
+              <option value="Very High">Very High</option>
+            </select>
+          </div>
+
+          <!-- Average Daily Usage Hours (slider) -->
+          <div class="field field--wide">
+            <div class="field__label-row">
+              <label for="usageHours">Average daily usage hours</label>
+              <output class="field__value" id="usageHoursValue" for="usageHours">4.5 hrs</output>
+            </div>
+            <input type="range" id="usageHours" name="avg_daily_usage_hours"
+                   min="0" max="24" step="0.1" value="4.5">
+            <p class="field__hint">Screen time spent on social media per day.</p>
+          </div>
+
+          <!-- Daily Unlocks -->
+          <div class="field">
+            <label for="dailyUnlocks">Daily phone unlocks</label>
+            <input type="number" id="dailyUnlocks" name="daily_unlocks" min="0" step="1" value="62" required
+                   aria-describedby="unlocks-hint">
+            <p class="field__hint" id="unlocks-hint">Number of times you unlock your phone daily.</p>
+          </div>
+
+          <!-- Study Hours (slider) -->
+          <div class="field field--wide">
+            <div class="field__label-row">
+              <label for="studyHours">Study hours per day</label>
+              <output class="field__value" id="studyHoursValue" for="studyHours">3.0 hrs</output>
+            </div>
+            <input type="range" id="studyHours" name="study_hours"
+                   min="0" max="24" step="0.1" value="3">
+          </div>
+
+          <!-- Physical Activity Hours (slider) -->
+          <div class="field field--wide">
+            <div class="field__label-row">
+              <label for="activityHours">Physical activity hours per day</label>
+              <output class="field__value" id="activityHoursValue" for="activityHours">1.0 hrs</output>
+            </div>
+            <input type="range" id="activityHours" name="physical_activity_hours"
+                   min="0" max="24" step="0.1" value="1">
+          </div>
+
+          <!-- Sleep Hours (slider) -->
+          <div class="field field--wide">
+            <div class="field__label-row">
+              <label for="sleepHours">Sleep hours per night</label>
+              <output class="field__value" id="sleepHoursValue" for="sleepHours">7.5 hrs</output>
+            </div>
+            <input type="range" id="sleepHours" name="sleep_hours_per_night"
+                   min="0" max="24" step="0.1" value="7.5">
+          </div>
+
+        </div>
+
+        <p class="form-error" id="formError" role="alert" hidden></p>
+
+        <button type="submit" class="btn btn--primary btn--submit" id="submitBtn">
+          <span class="btn__label">Analyze my mental health</span>
+          <span class="btn__spinner" aria-hidden="true"></span>
+        </button>
+      </form>
+
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- LOADING / ANALYSIS OVERLAY -->
+  <!-- ============================================================ -->
+  <div class="loading-overlay" id="loadingOverlay" hidden aria-live="polite" role="status">
+    <div class="loading-overlay__inner">
+      <svg class="loading-ring" viewBox="0 0 120 120" aria-hidden="true">
+        <circle class="loading-ring__track" cx="60" cy="60" r="52"/>
+        <circle class="loading-ring__sweep" cx="60" cy="60" r="52"/>
+      </svg>
+      <p class="loading-overlay__text" id="loadingText">Analyzing your patterns&hellip;</p>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- RESULT SECTION -->
+  <!-- ============================================================ -->
+  <section class="section" id="result" aria-labelledby="result-title" hidden>
+    <div class="section__inner">
+      <div class="card card--result">
+
+        <svg class="dragon dragon--result" id="result-dragon" viewBox="0 0 900 700" aria-hidden="true" focusable="false">
+          <use href="#" class="dragon__use"></use>
+        </svg>
+
+        <div class="result__particles" id="resultParticles" aria-hidden="true"></div>
+
+        <h2 class="result__eyebrow" id="result-title">Your mental health score</h2>
+
+        <div class="gauge" id="gauge">
+          <svg viewBox="0 0 220 220" class="gauge__svg">
+            <circle class="gauge__track" cx="110" cy="110" r="94"/>
+            <circle class="gauge__sweep" id="gaugeSweep" cx="110" cy="110" r="94"/>
+          </svg>
+          <div class="gauge__center">
+            <span class="gauge__number" id="scoreNumber">0</span>
+            <span class="gauge__max">/10</span>
+          </div>
+        </div>
+
+        <p class="result__status" id="resultStatus">Good</p>
+        <p class="result__message" id="resultMessage">
+          Your current indicators appear relatively positive.
+        </p>
+
+        <div class="breakdown" id="breakdown">
+          <div class="breakdown__item">
+            <span class="breakdown__label">Social media usage</span>
+            <span class="breakdown__value" id="breakdownUsage">&mdash;</span>
+          </div>
+          <div class="breakdown__item">
+            <span class="breakdown__label">Sleep</span>
+            <span class="breakdown__value" id="breakdownSleep">&mdash;</span>
+          </div>
+          <div class="breakdown__item">
+            <span class="breakdown__label">Study / lifestyle balance</span>
+            <span class="breakdown__value" id="breakdownBalance">&mdash;</span>
+          </div>
+          <div class="breakdown__item">
+            <span class="breakdown__label">Physical activity</span>
+            <span class="breakdown__value" id="breakdownActivity">&mdash;</span>
+          </div>
+          <div class="breakdown__item">
+            <span class="breakdown__label">Stress level</span>
+            <span class="breakdown__value" id="breakdownStress">&mdash;</span>
+          </div>
+        </div>
+
+        <div class="result__actions">
+          <button type="button" class="btn btn--ghost" id="retakeBtn">Take assessment again</button>
+          <button type="button" class="btn btn--text" id="backToTopBtn">Back to top</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Error state, shown if the API cannot be reached -->
+  <section class="section" id="apiError" aria-live="assertive" hidden>
+    <div class="section__inner">
+      <div class="card card--error">
+        <p class="card--error__title">Unable to connect to the prediction service</p>
+        <p class="card--error__body">
+          Please make sure the FastAPI server is running, then try again.
+        </p>
+        <button type="button" class="btn btn--ghost" id="errorRetryBtn">Back to assessment</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- DISCLAIMER -->
+  <!-- ============================================================ -->
+  <footer class="disclaimer">
+    <p>
+      Disclaimer: this tool is intended for educational and informational
+      purposes only. It does not provide a medical diagnosis or replace
+      professional mental health advice.
+    </p>
+  </footer>
+
+</main>
+
+<script src="js/script.js"></script>
+</body>
+</html>
