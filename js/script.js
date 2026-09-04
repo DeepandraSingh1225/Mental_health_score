@@ -3,7 +3,7 @@
 // ============================================================================
 
 // CHANGE THIS to match wherever your FastAPI server is running.
-const API_URL = "https://mental-health-score-2-een1.onrender.com";
+const API_URL = "https://mental-health-score-backend-h9nz.onrender.com";
 
 // The maximum possible score returned by the model, used to draw the gauge.
 // Change this if your model's scale is different from 0-100.
@@ -151,12 +151,12 @@ function clearFormError() {
 // ============================================================================
 
 async function predictMentalHealth(data) {
-  const response = await fetch(API_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
+  const response = await fetch(`${API_URL}/predict`, {
+      method: "POST",
+      headers: {
+          "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
   });
 
   if (!response.ok) {
