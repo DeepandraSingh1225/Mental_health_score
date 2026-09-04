@@ -3,7 +3,7 @@
 // ============================================================================
 
 // CHANGE THIS to match wherever your FastAPI server is running.
-const API_URL = "http://localhost:8000/predict";
+const API_URL = "https://mental-health-score-2-een1.onrender.com";
 
 // The maximum possible score returned by the model, used to draw the gauge.
 // Change this if your model's scale is different from 0-100.
